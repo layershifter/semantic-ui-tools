@@ -1,0 +1,51 @@
+{
+  "name": "@semantic-ui-react/bootstrap",
+  "version": "1.0.0",
+  "author": {
+    "email": "a@fedyashov.com",
+    "name": "Oleksandr Fediashov"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "log-symbols": "^3.0.0",
+    "ncp": "^2.0.0"
+  },
+  "devDependencies": {
+    "@pika/pack": "^0.5.0",
+    "@pika/plugin-build-node": "^0.6.0",
+    "@pika/plugin-bundle-node": "^0.6.0",
+    "@pika/plugin-simple-bin": "^0.6.0",
+    "@pika/plugin-standard-pkg": "^0.6.0"
+  },
+  "scripts": {
+    "build": "npx pika build",
+    "release": "npx pika publish",
+    "version": "npm run build"
+  },
+  "publishConfig": {
+    "public": true
+  },
+  "@pika/pack": {
+    "pipeline": [
+      [
+        "@pika/plugin-standard-pkg"
+      ],
+      [
+        "@pika/plugin-build-node"
+      ],
+      [
+        "@pika/plugin-bundle-node"
+      ],
+      [
+        "@pika/plugin-simple-bin",
+        {
+          "bin": "semantic-ui-react-bootstrap"
+        }
+      ]
+    ]
+  }
+}
