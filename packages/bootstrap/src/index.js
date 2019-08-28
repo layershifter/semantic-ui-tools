@@ -41,7 +41,7 @@ const run = async () => {
   if (
     hasMissingPackages([
       "@craco/craco",
-      "craco-less",
+      "@semantic-ui-react/craco-less",
       "semantic-ui-less",
       "semantic-ui-react"
     ])
