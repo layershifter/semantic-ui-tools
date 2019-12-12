@@ -6,6 +6,14 @@
     "name": "Oleksandr Fediashov"
   },
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Semantic-Org/Semantic-UI-React/issues"
+  },
+  "homepage": "https://github.com/layershifter/semantic-ui-tools/tree/master/packages/craco-less",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/layershifter/semantic-ui-tools"
+  },
   "engines": {
     "node": ">=8.0.0"
   },
