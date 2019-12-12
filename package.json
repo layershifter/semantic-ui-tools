@@ -2,8 +2,8 @@
   "private": true,
   "scripts": {
     "build": "lerna run build",
-    "release": "lerna publish from-package --contents pkg",
-    "version": "lerna version"
+    "bump-version": "lerna version",
+    "release": "lerna publish from-package --contents pkg"
   },
   "devDependencies": {
     "husky": "^3.1.0",
