@@ -10,16 +10,16 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "chalk": "^2.4.2",
+    "chalk": "^3.0.0",
     "log-symbols": "^3.0.0",
     "ncp": "^2.0.0"
   },
   "devDependencies": {
     "@pika/pack": "^0.5.0",
-    "@pika/plugin-build-node": "^0.6.0",
-    "@pika/plugin-bundle-node": "^0.6.0",
-    "@pika/plugin-simple-bin": "^0.6.0",
-    "@pika/plugin-standard-pkg": "^0.6.0"
+    "@pika/plugin-build-node": "^0.8.1",
+    "@pika/plugin-bundle-node": "^0.8.1",
+    "@pika/plugin-simple-bin": "^0.8.1",
+    "@pika/plugin-standard-pkg": "^0.8.1"
   },
   "scripts": {
     "build": "npx pika build",
