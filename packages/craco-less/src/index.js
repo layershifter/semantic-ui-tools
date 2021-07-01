@@ -8,7 +8,7 @@ const CracoLessPlugin = require("craco-less");
 const path = require("path");
 
 const overrideWebpackConfig = ({ context, pluginOptions, webpackConfig }) => {
-  pluginOptions = pluginOptions || {};
+  pluginOptions = {lessLoaderOptions: { lessOptions: { math: 'always' } }, ...pluginOptions};
 
   // add alias to theme.config
   webpackConfig.resolve.alias["../../theme.config$"] = path.join(
