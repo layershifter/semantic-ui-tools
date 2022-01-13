@@ -1,5 +1,4 @@
 const {
-  getLoader,
   loaderByName,
   removeLoaders,
   throwUnexpectedConfigError
@@ -8,7 +7,10 @@ const CracoLessPlugin = require("craco-less");
 const path = require("path");
 
 const overrideWebpackConfig = ({ context, pluginOptions, webpackConfig }) => {
-  pluginOptions = {lessLoaderOptions: { lessOptions: { math: 'always' } }, ...pluginOptions};
+  pluginOptions = {
+    lessLoaderOptions: { lessOptions: { math: "always" } },
+    ...pluginOptions
+  };
 
   // add alias to theme.config
   webpackConfig.resolve.alias["../../theme.config$"] = path.join(
@@ -16,23 +18,33 @@ const overrideWebpackConfig = ({ context, pluginOptions, webpackConfig }) => {
     "/semantic-ui/theme.config"
   );
 
-  // file-loader:
-  // theme.config, *.variables and *.overrides files should be excluded
-  const { isFound, match: fileLoaderMatch } = getLoader(
-    webpackConfig,
-    loaderByName("file-loader")
-  );
+  const oneOfRule = webpackConfig.module.rules.find(rule => rule.oneOf);
 
-  if (!isFound) {
+  if (!oneOfRule) {
     throwUnexpectedConfigError({
       packageName: "@semantic-ui-react/craco-less",
-      message: `Can't find "file-loader" in the ${context.env} webpack config!`
+      message:
+        "Can't find a 'oneOf' rule under module.rules in the " +
+        `${context.env} webpack config!`
     });
   }
 
-  fileLoaderMatch.loader.exclude.push(/theme.config$/);
-  fileLoaderMatch.loader.exclude.push(/\.variables$/);
-  fileLoaderMatch.loader.exclude.push(/\.overrides$/);
+  const resourceLoader = oneOfRule.oneOf.find(
+    ({ type }) => type === "asset/resource"
+  );
+
+  if (!resourceLoader) {
+    throwUnexpectedConfigError({
+      packageName: "@semantic-ui-react/craco-less",
+      message:
+        "Can't find a 'asset/resource' loader under module.rules in the " +
+        `${context.env} webpack config!`
+    });
+  }
+
+  resourceLoader.exclude.push(/theme.config$/);
+  resourceLoader.exclude.push(/\.variables$/);
+  resourceLoader.exclude.push(/\.overrides$/);
 
   // resolve-url-loader:
   // should be removed as it causes bugs
