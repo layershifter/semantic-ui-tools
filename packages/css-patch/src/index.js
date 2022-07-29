@@ -5,46 +5,71 @@ const path = require("path");
 
 const nodeModulesPath = path.resolve(process.cwd(), "node_modules");
 
-const hasPackage = packageName => {
-  return fs.existsSync(path.resolve(nodeModulesPath, packageName));
+const hasPackages = packageNames => {
+  for (const packageName of packageNames) {
+    if (fs.existsSync(path.resolve(nodeModulesPath, packageName))) {
+      return packageName;
+    }
+  }
+
+  return undefined;
 };
 
 const replaceDoubleSemiColon = input =>
   input.replace("utf-8;;base64", "utf-8;base64");
 
-const run = async () => {
-  if (hasPackage("semantic-ui-less")) {
-    console.log(logSymbols.info, `Detected "semantic-ui-less" package...`);
-
-    const fileToPatchPath = path.resolve(
-      nodeModulesPath,
-      "semantic-ui-less",
-      "themes",
-      "default",
-      "elements",
-      "step.overrides"
-    );
-
-    if (fs.existsSync(fileToPatchPath)) {
-      fs.writeFileSync(
-        fileToPatchPath,
-        replaceDoubleSemiColon(
-          fs.readFileSync(fileToPatchPath, { encoding: "utf8" })
-        )
-      );
-      console.log(logSymbols.info, `Patch was successfully applied`);
-    } else {
+const fixFiles = (filesToPatch, packageName) => {
+  filesToPatch.forEach(fileToPatchPath => {
+    if (!fs.existsSync(fileToPatchPath)) {
       console.log(
         logSymbols.error,
         chalk.bgRed.bold(
           `Failed to find "${path.resolve(
             process.cwd(),
             fileToPatchPath
-          )}", please check your installation of "semantic-ui-less"`
+          )}", please check your installation of "${packageName}"`
         )
       );
+
+      return;
     }
-  } else if (hasPackage("semantic-ui-css")) {
+
+    fs.writeFileSync(
+      fileToPatchPath,
+      replaceDoubleSemiColon(
+        fs.readFileSync(fileToPatchPath, { encoding: "utf8" })
+      )
+    );
+  });
+
+  console.log(logSymbols.info, `Patch was successfully applied`);
+}
+
+const run = () => {
+  const lessPackage = hasPackages(["semantic-ui-less", "fomantic-ui-less"]);
+  if (lessPackage !== undefined) {
+    console.log(logSymbols.info, `Detected "${lessPackage}" package...`);
+
+    const filesToPatchPath = [
+      path.resolve(
+        nodeModulesPath,
+        lessPackage,
+        "themes",
+        "default",
+        "elements",
+        "step.overrides"
+      ),
+    ];
+
+    fixFiles(filesToPatchPath, lessPackage);
+
+    return;
+  }
+
+  const cssPackage = hasPackages(["semantic-ui-css", "fomantic-ui-css"]);
+  if (cssPackage !== undefined) {
+    console.log(logSymbols.info, `Detected "${cssPackage}" package...`);
+
     const filesToPatchPath = [
       path.resolve(nodeModulesPath, "semantic-ui-css", "semantic.css"),
       path.resolve(nodeModulesPath, "semantic-ui-css", "semantic.min.css"),
@@ -62,19 +87,12 @@ const run = async () => {
       )
     ];
 
-    filesToPatchPath.forEach(fileToPatchPath => {
-      fs.writeFileSync(
-        fileToPatchPath,
-        replaceDoubleSemiColon(
-          fs.readFileSync(fileToPatchPath, { encoding: "utf8" })
-        )
-      );
-    });
+    fixFiles(filesToPatchPath, cssPackage);
 
-    console.log(logSymbols.info, `Patch was successfully applied`);
-  } else {
-    console.log(logSymbols.info, `No supported packages found`);
+    return;
   }
+
+  console.log(logSymbols.info, `No supported packages found`);
 };
 
 module.exports = {
