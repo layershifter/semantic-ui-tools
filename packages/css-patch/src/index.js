@@ -45,7 +45,7 @@ const fixFiles = (filesToPatch, packageName) => {
   console.log(logSymbols.info, `Patch was successfully applied`);
 }
 
-const run = () => {
+const run = async () => {
   const lessPackage = hasPackages(["semantic-ui-less", "fomantic-ui-less"]);
   if (lessPackage !== undefined) {
     console.log(logSymbols.info, `Detected "${lessPackage}" package...`);
