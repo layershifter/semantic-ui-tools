@@ -71,17 +71,17 @@ const run = async () => {
     console.log(logSymbols.info, `Detected "${cssPackage}" package...`);
 
     const filesToPatchPath = [
-      path.resolve(nodeModulesPath, "semantic-ui-css", "semantic.css"),
-      path.resolve(nodeModulesPath, "semantic-ui-css", "semantic.min.css"),
+      path.resolve(nodeModulesPath, cssPackage, "semantic.css"),
+      path.resolve(nodeModulesPath, cssPackage, "semantic.min.css"),
       path.resolve(
         nodeModulesPath,
-        "semantic-ui-css",
+        cssPackage,
         "components",
         "step.css"
       ),
       path.resolve(
         nodeModulesPath,
-        "semantic-ui-css",
+        cssPackage,
         "components",
         "step.min.css"
       )
