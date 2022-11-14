@@ -1,6 +1,6 @@
 {
   "name": "@semantic-ui-react/craco-less",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "author": {
     "email": "a@fedyashov.com",
     "name": "Oleksandr Fediashov"
@@ -21,7 +21,7 @@
     "craco-less": "^2.0.0"
   },
   "devDependencies": {
-    "@craco/craco": "^7.0.0-alpha.8",
+    "@craco/craco": "^7.0.0",
     "@pika/pack": "^0.5.0",
     "@pika/plugin-build-node": "^0.8.1",
     "@pika/plugin-standard-pkg": "^0.8.1"
