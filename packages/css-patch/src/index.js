@@ -66,7 +66,7 @@ const run = async () => {
     return;
   }
 
-  const cssPackage = hasPackages(["semantic-ui-css", "fomantic-ui-css"]);
+  const cssPackage = hasPackages(["semantic-ui-css", "fomantic-ui-css", "semantic-ui-offline"]);
   if (cssPackage !== undefined) {
     console.log(logSymbols.info, `Detected "${cssPackage}" package...`);
 
