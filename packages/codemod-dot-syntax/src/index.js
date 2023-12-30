@@ -164,23 +164,22 @@ const run = async () => {
     let newFileContent = fileContent;
     const importList = {};
 
-    Object.entries(COMPONENT_LIST).forEach(([origin, replacement]) => {
-      if (newFileContent.includes(origin)) {
-        importList[origin] = replacement;
-      }
+    Object.entries(COMPONENT_LIST)
+      .reverse()
+      .forEach(([origin, replacement]) => {
+        if (newFileContent.includes(origin)) {
+          importList[origin] = replacement;
+        }
 
-      newFileContent = newFileContent.replace(
-        new RegExp(origin, "g"),
-        replacement
-      );
-    });
+        newFileContent = newFileContent.replaceAll(origin, replacement);
+      });
 
     if (Object.keys(importList).length > 0) {
       newFileContent = newFileContent.replace(
-        /import \{(.*)} from ('|")semantic-ui-react('|")/,
-        `import { $1, ${Object.values(importList).join(
+        /import \{([^\0]*?)} from ('|")semantic-ui-react('|")/,
+        `import { ${Object.values(importList).join(
           ", "
-        )} } from $2semantic-ui-react$3`
+        )}, $1 } from $2semantic-ui-react$3`
       );
     }
 
