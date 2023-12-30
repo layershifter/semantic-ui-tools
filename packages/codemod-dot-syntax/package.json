@@ -1,0 +1,60 @@
+{
+  "name": "@semantic-ui-react/codemod-dot-syntax",
+  "version": "0.0.3",
+  "author": {
+    "email": "a@fedyashov.com",
+    "name": "Oleksandr Fediashov"
+  },
+  "license": "MIT",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/Semantic-Org/Semantic-UI-React/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/layershifter/semantic-ui-tools"
+  },
+  "homepage": "https://github.com/layershifter/semantic-ui-tools/tree/master/packages/codemod-dot-syntax",
+  "dependencies": {
+    "fast-glob": "^3.3.2",
+    "picocolors": "^1.0.0",
+    "log-symbols": "^4.1.0",
+    "yargs": "^17.7.2"
+  },
+  "devDependencies": {
+    "@pika/pack": "^0.5.0",
+    "@pika/plugin-build-node": "^0.8.1",
+    "@pika/plugin-simple-bin": "^0.8.1",
+    "@pika/plugin-standard-pkg": "^0.8.1"
+  },
+  "scripts": {
+    "build": "npx pika build",
+    "release": "npx pika publish",
+    "version": "npm run build"
+  },
+  "publishConfig": {
+    "public": true
+  },
+  "@pika/pack": {
+    "pipeline": [
+      [
+        "@pika/plugin-standard-pkg"
+      ],
+      [
+        "@pika/plugin-build-node",
+        {
+          "minNodeVersion": "16"
+        }
+      ],
+      [
+        "@pika/plugin-simple-bin",
+        {
+          "bin": "semantic-ui-codemod-dot-syntax"
+        }
+      ]
+    ]
+  }
+}
